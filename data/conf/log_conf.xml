@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This is the standard Configuration File for the logging-System...
+You will find every usable Tag here, no excuses (and if there are any, tell me... sometimes I do... stuff)
+You don't need to restart the Program for the changes to take place. This configuration is read every output
+
+This configuration XML will generate an Output like: [19.10.2013 20:14:17] Info: ==== STARTING SESSION ====
+-->
+<log_config>
+    <!-- (Relative) path for the log file -->
+    <path>data/log/devPhase.log</path>
+    
+    <!-- What will be logged -->
+    <logDebug>true</logDebug>
+    <logInfo>true</logInfo>
+    <logWarn>true</logWarn>
+    <logError>true</logError>
+    
+    <!-- Text for Logging -->
+    <logDebugText> Debug: </logDebugText>
+    <logInfoText> Info: </logInfoText>
+    <logWarnText> Warn: </logWarnText>
+    <logErrorText> Error: </logErrorText>
+    
+    <!-- Formatting settings for the Date/Time Output -->
+    <dateTimeFormat>dd.MM.yyyy HH:mm:ss</dateTimeFormat>
+    <dateTimePrefix>[</dateTimePrefix>
+    <dateTimeSuffix>]</dateTimeSuffix>
+</log_config>

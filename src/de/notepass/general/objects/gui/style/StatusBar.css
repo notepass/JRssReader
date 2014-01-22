@@ -1,0 +1,7 @@
+.StatusBarItem {
+        -fx-border-color: linear-gradient(to right, derive(rgba(0,0,0,0),65%) 99.9%, derive(grey,-20%) 100%);  /*What? JavaFx has no border-right Attribute... Let me be creative...*/
+        -fx-border-width: 2;
+        -fx-background-color: rgba(0,0,0,0);
+        -fx-padding: 5px 5px 5px 5px;
+        /*top,right,bottom,left*/
+}

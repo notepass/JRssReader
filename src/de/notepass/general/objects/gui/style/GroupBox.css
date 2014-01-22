@@ -1,0 +1,16 @@
+.GroupBoxTitle {
+    /*-fx-background-color: rgba(0,0,0,0);*/
+    -fx-background-color: -fx-box-border,-fx-background;
+    -fx-font-size: 12px;
+    -fx-translate-y: -10;
+}
+
+.GroupBoxBorder {
+    -fx-content-display: top;
+    -fx-border-color: grey;
+    -fx-border-width: 2;
+}
+
+.GroupBoxContent {
+
+}

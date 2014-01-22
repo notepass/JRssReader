@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Example of a language file for the english language
+-->
+
+<lang code="en_GB" display="English (GB)">
+    <!-- Error Messages -->
+    <stdErrorTitle>Fatal Error</stdErrorTitle>
+    <stdErrorPrefix></stdErrorPrefix>
+    <stdErrorSuffix></stdErrorSuffix>
+    
+    <stdWarnPrefix></stdWarnPrefix>
+    <stdWarnSuffix></stdWarnSuffix>
+    
+    <stdInfoPrefix></stdInfoPrefix>
+    <stdInfoPrefix></stdInfoPrefix>
+    
+    <!-- Other Messages -->
+    <infoStartSession>===Starting session===</infoStartSession>
+    <infoStopSession>===Stopping seesion===</infoStopSession>
+</lang>
