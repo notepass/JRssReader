@@ -8,6 +8,7 @@ Completed Features:
 - Rss-Files can be downloaded from the web
 - An event is triggered, if there is new content in the Rss
 - Automatic update function (can be turned on/off)
+- Example GUI
 
 Planned features:
 - Full Rss-Readbility (W3C-Rss 2.0-standard-conform)
