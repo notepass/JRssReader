@@ -63,6 +63,16 @@ public class Log {
         FileOutputStream logFileStream = null;
         //reads the path for the output file from the Config
         String filePath = readConfig(InternalConfigDummy.logXMLpath);
+        //Make folder/files
+        new File(filePath).getParentFile().mkdirs();
+        if (!(new File(filePath).exists())) {
+            try {
+                new File(filePath).createNewFile();
+            } catch (IOException e) {
+                Util.showPureError("Couldn't create the log file. Will now exit"+Util.getLineSeparator()+Util.exceptionToString(e));
+                System.exit(1);
+            }
+        }
         //Add an break to the Text, so it breaks lines in the textfile
         text = text + "\r\n";
         try {

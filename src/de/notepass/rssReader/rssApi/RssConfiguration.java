@@ -62,6 +62,14 @@ public class RssConfiguration {
             InternalConfig.rssUrlSaveFile.getParentFile().mkdirs();
             InternalConfig.rssUrlSaveFile.createNewFile();
         }
+
+        if (!InternalConfig.rssRoot.exists()) {
+            InternalConfig.rssRoot.mkdirs();
+        }
+
+        if (!InternalConfig.rssTmpRoot.exists()) {
+            InternalConfig.rssTmpRoot.mkdirs();
+        }
     }
 
     /**
