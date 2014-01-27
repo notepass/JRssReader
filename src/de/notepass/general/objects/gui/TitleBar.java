@@ -2,17 +2,13 @@ package de.notepass.general.objects.gui;
 
 import de.notepass.general.internalConfig.InternalConfigDummy;
 import de.notepass.general.util.Util;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -135,7 +131,7 @@ public class TitleBar extends StackPane {
         if (lastMouseClick==0) {
             lastMouseClick=System.currentTimeMillis();
         } else {
-            if ( (time - lastMouseClick) <= InternalConfigDummy.doubleClickTimeout) {
+            if ( (time - lastMouseClick) <= InternalConfigDummy.DOUBLIC_CLICK_TIMEOUT) {
                 bt_maximize.fire();
 
                 //So dat you don't un/maximise it when you click again in < 1sek

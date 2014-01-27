@@ -3,11 +3,6 @@ package de.notepass.rssReader.rssApi.objects;
 import de.notepass.general.logger.Log;
 import de.notepass.general.util.Util;
 import de.notepass.rssReader.config.InternalConfig;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.util.Duration;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,8 +10,6 @@ import javax.xml.xpath.XPathExpressionException;
 import java.io.*;
 import java.math.BigInteger;
 import java.net.URI;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -45,8 +38,8 @@ public class Rss {
      * <p>Function to check if all needed Directories exists and to create missing</p>
      */
     private void checkFolders() {
-        if (!InternalConfig.rssTmpRoot.exists()) {
-            InternalConfig.rssTmpRoot.mkdirs();
+        if (!InternalConfig.RSS_TEMP_ROOT.exists()) {
+            InternalConfig.RSS_TEMP_ROOT.mkdirs();
         }
     }
 
@@ -67,7 +60,7 @@ public class Rss {
     public Rss(URI sourceURI, UUID rssUuid) throws IOException, ParserConfigurationException, XPathExpressionException, SAXException {
         this.rssUri = sourceURI;
         this.rssUuid = rssUuid;
-        this.localFile = new File(InternalConfig.rssTmpRoot+"/"+rssUuid.toString()+".rss");
+        this.localFile = new File(InternalConfig.RSS_TEMP_ROOT +"/"+rssUuid.toString()+".rss");
         update();
 
         this.autoUpdateTimerTask = new TimerTask() {

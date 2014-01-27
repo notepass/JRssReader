@@ -44,8 +44,8 @@ public class OptionPane {
         public static Response ShowConfirmDialog(Stage primaryStage, String message, String title) {
             VBox vb = new VBox();
             Scene scene = new Scene(vb);
-            vb.setPadding(InternalConfigDummy.guiDefaultPadding);
-            vb.setSpacing(InternalConfigDummy.guiDefaultSpacing);
+            vb.setPadding(InternalConfigDummy.GUI_DEFAULT_PADDING);
+            vb.setSpacing(InternalConfigDummy.GUI_DEFAULT_SPACING);
             final Dialog dial = new Dialog(title,primaryStage,scene /*, "res/Confirm.png"*/);
             Button yesButton = new Button("yes");
             yesButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -59,11 +59,11 @@ public class OptionPane {
             BorderPane bp = new BorderPane();
             HBox buttons = new HBox();
             buttons.setAlignment(Pos.CENTER);
-            buttons.setSpacing(InternalConfigDummy.guiDefaultSpacing);
+            buttons.setSpacing(InternalConfigDummy.GUI_DEFAULT_SPACING);
             buttons.getChildren().addAll(yesButton);
             bp.setCenter(buttons);
             HBox msg = new HBox();
-            msg.setSpacing(InternalConfigDummy.guiDefaultSpacing);
+            msg.setSpacing(InternalConfigDummy.GUI_DEFAULT_SPACING);
             msg.getChildren().addAll(msg,bp);
             dial.showDialog();
             return buttonSelected;

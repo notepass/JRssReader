@@ -38,12 +38,12 @@ public class YesNoPrompt extends Application {
         final BorderPane layoutPane = new BorderPane();
         final HBox promptText = new HBox();
         promptText.setAlignment(Pos.TOP_CENTER);
-        promptText.setPadding(InternalConfigDummy.guiDefaultPadding);
+        promptText.setPadding(InternalConfigDummy.GUI_DEFAULT_PADDING);
         final HBox promptButtons = new HBox();
-        promptButtons.setSpacing(InternalConfigDummy.guiDefaultSpacing);
+        promptButtons.setSpacing(InternalConfigDummy.GUI_DEFAULT_SPACING);
         promptButtons.setAlignment(Pos.BASELINE_RIGHT);
         promptButtons.setStyle("-fx-background-color: -fx-box-border,-fx-background;");
-        promptButtons.setPadding(InternalConfigDummy.guiDefaultPadding);
+        promptButtons.setPadding(InternalConfigDummy.GUI_DEFAULT_PADDING);
         //Setting up Text and Buttons
         layoutPane.setCenter(promptText);
         layoutPane.setBottom(promptButtons);

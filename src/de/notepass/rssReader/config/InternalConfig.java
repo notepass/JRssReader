@@ -11,21 +11,21 @@ public class InternalConfig extends InternalConfigDummy {
     /**
      * <p>Root-Folder for all RSS-specific stuff</p>
      */
-    public static File rssRoot = new File(rootFolder+"/rss");
+    final public static File RSS_ROOT = new File(ROOT_FOLDER +"/rss");
 
     /**
      * <p>Folder for all RSS-Relevant configuration</p>
      */
-    public static File rssConfigRoot = new File(new File(configRoot).getAbsolutePath());
+    final public static File RSS_CONFIG_ROOT = new File(new File(CONFIG_ROOT).getAbsolutePath());
 
     /**
      * <p>File to save the IDs/URLs of the RSS-Feed</p>
      */
-    public static File rssUrlSaveFile = new File(rssConfigRoot.getAbsolutePath()+"/rss.xml");
+    final public static File RSS_URL_SAVE_FILE = new File(RSS_CONFIG_ROOT.getAbsolutePath()+"/rss.properties");
 
     /**
      * <p>Temporary place to save downloaded RSS-Files</p>
      */
-    public static File rssTmpRoot = new File(rssRoot.getAbsolutePath()+"/temp");
+    final public static File RSS_TEMP_ROOT = new File(RSS_ROOT.getAbsolutePath()+"/temp");
 
 }

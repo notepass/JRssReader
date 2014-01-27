@@ -60,9 +60,9 @@ public class FxGui2 extends Application {
         final ColumnConstraints col_right = new ColumnConstraints();
         col_right.setPercentWidth(50);
         layout.getColumnConstraints().addAll(col_left, col_right);
-        layout.setHgap(InternalConfig.guiDefaultHGap);
-        layout.setVgap(InternalConfig.guiDefaultVGap);
-        layout.setPadding(InternalConfig.groupBoxDefaultPadding);
+        layout.setHgap(InternalConfig.GUI_DEFAULT_HGAP);
+        layout.setVgap(InternalConfig.GUI_DEFAULT_VGAP);
+        layout.setPadding(InternalConfig.GROUPBOX_DEFAULT_PADDING);
         final Scene scene = new Scene(layout,500,500);
         stage.setScene(scene);
         final ObservableList<Rss> lv_rssFeedsItems = FXCollections.observableArrayList();
@@ -79,7 +79,7 @@ public class FxGui2 extends Application {
         layout.add(lv_rssItemList,0,2);
         layout.add(wv_rssItemVisualiser,1,1,1,2);
         final HBox hb_buttons = new HBox();
-        hb_buttons.setSpacing(InternalConfig.guiDefaultSpacing);
+        hb_buttons.setSpacing(InternalConfig.GUI_DEFAULT_SPACING);
         Button bt_addRssFeed = new Button("+");
         Button bt_remRssFeed = new Button("-");
         final Button bt_reload = new Button("R");
@@ -144,8 +144,8 @@ public class FxGui2 extends Application {
                 final Stage addStage = new Stage();
                 addStage.initStyle(StageStyle.UTILITY);
                 GridPane addLayout = new GridPane();
-                addLayout.setHgap(InternalConfig.guiDefaultHGap);
-                addLayout.setVgap(InternalConfig.guiDefaultVGap);
+                addLayout.setHgap(InternalConfig.GUI_DEFAULT_HGAP);
+                addLayout.setVgap(InternalConfig.GUI_DEFAULT_VGAP);
                 addLayout.setPadding(new Insets(2));
                 final TextField tf_rssUri = new TextField();
                 tf_rssUri.setPromptText("Rss-Feed-Url");
@@ -172,7 +172,7 @@ public class FxGui2 extends Application {
                             //Check if the Rss-File is a valid Rss-File
                             boolean isValid;
                             URI RssUrl = new URI(tf_rssUri.getText());
-                            File target = new File(InternalConfig.rssTmpRoot.getAbsolutePath()+"/check.rss");
+                            File target = new File(InternalConfig.RSS_TEMP_ROOT.getAbsolutePath()+"/check.rss");
                             Util.download(RssUrl,target);
                             isValid = RssConfiguration.isValidRss(target);
                             //Deletes the temporary file

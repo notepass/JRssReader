@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-This is the General Config of the Program
--->
-
-<config>
-    <langFile>en_GB.xml</langFile>  <!-- Language File to use -->
-</config>

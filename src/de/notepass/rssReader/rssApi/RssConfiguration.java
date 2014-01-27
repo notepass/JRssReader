@@ -3,20 +3,13 @@ package de.notepass.rssReader.rssApi;
 import de.notepass.general.util.Util;
 import de.notepass.rssReader.config.InternalConfig;
 import de.notepass.rssReader.rssApi.objects.Rss;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -24,7 +17,9 @@ import java.net.URISyntaxException;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * <p>This class makes it possible to read/write the RSS-Configuration.
@@ -58,17 +53,17 @@ public class RssConfiguration {
      * <p>Method to check the Files</p>
      */
     private static void checkFiles() throws IOException {
-        if (!InternalConfig.rssUrlSaveFile.exists()) {
-            InternalConfig.rssUrlSaveFile.getParentFile().mkdirs();
-            InternalConfig.rssUrlSaveFile.createNewFile();
+        if (!InternalConfig.RSS_URL_SAVE_FILE.exists()) {
+            InternalConfig.RSS_URL_SAVE_FILE.getParentFile().mkdirs();
+            InternalConfig.RSS_URL_SAVE_FILE.createNewFile();
         }
 
-        if (!InternalConfig.rssRoot.exists()) {
-            InternalConfig.rssRoot.mkdirs();
+        if (!InternalConfig.RSS_ROOT.exists()) {
+            InternalConfig.RSS_ROOT.mkdirs();
         }
 
-        if (!InternalConfig.rssTmpRoot.exists()) {
-            InternalConfig.rssTmpRoot.mkdirs();
+        if (!InternalConfig.RSS_TEMP_ROOT.exists()) {
+            InternalConfig.RSS_TEMP_ROOT.mkdirs();
         }
     }
 
@@ -119,13 +114,13 @@ public class RssConfiguration {
     public static void readRssFileConfig() throws ParserConfigurationException, SAXException, XPathExpressionException, IOException, URISyntaxException {
         checkFiles();
         int i=0;
-        String rssUUID = Util.nodeListToString(Util.executeXPath(InternalConfig.rssUrlSaveFile.getAbsolutePath(),"/root/rssFile"+i+"/UUID/text()"));
-        String rssURL = Util.nodeListToString(Util.executeXPath(InternalConfig.rssUrlSaveFile.getAbsolutePath(), "/root/rssFile" + i + "/URL/text()"));
+        String rssUUID = Util.nodeListToString(Util.executeXPath(InternalConfig.RSS_URL_SAVE_FILE.getAbsolutePath(),"/root/rssFile"+i+"/UUID/text()"));
+        String rssURL = Util.nodeListToString(Util.executeXPath(InternalConfig.RSS_URL_SAVE_FILE.getAbsolutePath(), "/root/rssFile" + i + "/URL/text()"));
         while ( ((rssUUID != null) && (!rssUUID.equals(""))) && ( (rssURL != null) && (!rssUUID.equals(""))) ) {
             rssUrls.add(new Object[]{new URI(rssURL),UUID.fromString(rssUUID)});
             i++;
-            rssUUID = Util.nodeListToString(Util.executeXPath(InternalConfig.rssUrlSaveFile.getAbsolutePath(),"/root/rssFile"+i+"/UUID/text()"));
-            rssURL = Util.nodeListToString(Util.executeXPath(InternalConfig.rssUrlSaveFile.getAbsolutePath(), "/root/rssFile" + i + "/URL/text()"));
+            rssUUID = Util.nodeListToString(Util.executeXPath(InternalConfig.RSS_URL_SAVE_FILE.getAbsolutePath(),"/root/rssFile"+i+"/UUID/text()"));
+            rssURL = Util.nodeListToString(Util.executeXPath(InternalConfig.RSS_URL_SAVE_FILE.getAbsolutePath(), "/root/rssFile" + i + "/URL/text()"));
         }
     }
     */
@@ -135,6 +130,7 @@ public class RssConfiguration {
      */
     private static void writeRssFileConfig(/*URI[] RssUrls, UUID[] RssUuids*/) throws IOException, ParserConfigurationException, TransformerException {
         checkFiles();
+        /*
         //Create a documentBuilder instanz
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -168,10 +164,23 @@ public class RssConfiguration {
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer trans = tf.newTransformer();
         DOMSource ds = new DOMSource(doc);
-        StreamResult sr = new StreamResult(InternalConfig.rssUrlSaveFile);
+        StreamResult sr = new StreamResult(InternalConfig.RSS_URL_SAVE_FILE);
 
         //Save File to Disc
         trans.transform(ds,sr);
+        */
+        Properties properties = new Properties();
+        FileOutputStream fos = new FileOutputStream(InternalConfig.RSS_URL_SAVE_FILE);
+        String mergedUrls = "";
+        String mergedUuids = "";
+        for (Object[] rssData:rssUrls) {
+            mergedUrls = mergedUrls + ((URI)rssData[0]).toString() + ";";
+            mergedUuids = mergedUuids + ((UUID)rssData[1]).toString() + ";";
+        }
+        properties.setProperty("mergedUrls",mergedUrls);
+        properties.setProperty("mergedUuids",mergedUuids);
+        properties.store(fos,"Automatic generated file. Do NOT touch");
+
     }
 
     /**
@@ -206,8 +215,8 @@ public class RssConfiguration {
      */
     public static boolean addRssFeed(URI Url) throws IOException, TransformerException, ParserConfigurationException {
         checkFiles();
-        downloadRss(Url,new File(InternalConfig.rssTmpRoot.getAbsoluteFile()+"/temp.rss"));
-        if (Util.isValidXml(new File(InternalConfig.rssTmpRoot.getAbsoluteFile()+"/temp.rss"))) {
+        downloadRss(Url,new File(InternalConfig.RSS_TEMP_ROOT.getAbsoluteFile()+"/temp.rss"));
+        if (Util.isValidXml(new File(InternalConfig.RSS_TEMP_ROOT.getAbsoluteFile()+"/temp.rss"))) {
             rssUrls.add(new Object[]{Url,UUID.randomUUID()});
             writeRssFileConfig();
             return true;
@@ -226,13 +235,14 @@ public class RssConfiguration {
      */
     public static void loadConfigFromDisk() throws ParserConfigurationException, SAXException, XPathExpressionException, IOException, URISyntaxException {
         checkFiles();
+        /*
         ArrayList<URI> rssUriLocal = new ArrayList<URI>();
-        for (String Url:Util.nodeListToStringArray(Util.executeXPath(InternalConfig.rssUrlSaveFile.getAbsolutePath(),"/root//rssFile/URL/text()"))) {
+        for (String Url:Util.nodeListToStringArray(Util.executeXPath(InternalConfig.RSS_URL_SAVE_FILE.getAbsolutePath(),"/root//rssFile/URL/text()"))) {
             rssUriLocal.add(new URI(Url));
         }
 
         ArrayList<UUID> rssUuidLocal = new ArrayList<UUID>();
-        for (String Uuid:Util.nodeListToStringArray(Util.executeXPath(InternalConfig.rssUrlSaveFile.getAbsolutePath(),"/root//rssFile/UUID/text()"))) {
+        for (String Uuid:Util.nodeListToStringArray(Util.executeXPath(InternalConfig.RSS_URL_SAVE_FILE.getAbsolutePath(),"/root//rssFile/UUID/text()"))) {
             rssUuidLocal.add(UUID.fromString(Uuid));
         }
 
@@ -240,6 +250,34 @@ public class RssConfiguration {
         for (int i=0;i<rssUriLocal.size();i++) {
             rssUrls.add(new Object[]{rssUriLocal.get(i),rssUuidLocal.get(i)});
         }
+        */
+        Properties properties = new Properties();
+        FileInputStream fis = new FileInputStream(InternalConfig.RSS_URL_SAVE_FILE);
+        properties.load(fis);
+        if ((properties.getProperty("mergedUrls") != null) && (properties.getProperty("mergedUuids") != null)) {
+            if ((!properties.getProperty("mergedUrls").equals("")) && (!properties.getProperty("mergedUuids").equals(""))) {
+                rssUrls.clear();
+                ArrayList<URI> tempUri = new ArrayList<>();
+                for (String url:properties.getProperty("mergedUrls").split(Pattern.quote(";"))) {
+                    if (!url.equals("")) {
+                        tempUri.add(new URI(url));
+                    }
+                }
+
+                ArrayList<UUID> tempUuid = new ArrayList<>();
+                for (String uuid:properties.getProperty("mergedUuids").split(Pattern.quote(";"))) {
+                    if (!uuid.equals("")) {
+                        tempUuid.add(UUID.fromString(uuid));
+                    }
+                }
+
+
+                for (int i=0;i<tempUuid.size();i++) {
+                    rssUrls.add(new Object[]{tempUri.get(i),tempUuid.get(i)});
+                }
+            }
+        }
+
     }
 
     /**

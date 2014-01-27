@@ -21,10 +21,7 @@ import java.net.URLClassLoader;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
@@ -53,13 +50,16 @@ public class Util implements Serializable {
     //This function can read the Config-File of the program
     public static String readConfig(String node) {
         try {
-            return Util.nodeListToString(Util.executeXPath(InternalConfigDummy.configRoot+"/conf.xml","/config/"+node+"/text()"));
+            Properties mainProperties = new Properties();
+            FileInputStream fis = new FileInputStream(InternalConfigDummy.CONFIG_FILE);
+            mainProperties.load(fis);
+            return mainProperties.getProperty(InternalConfigDummy.CONFIG_MAIN_PREFIX+node);
         } catch (Exception e) {
             Log.logError(e);
-            Log.logError("Couldn't read the main Config file... Stopping...");
+            Log.logError("Couldn't read the main Config file... Stopping..."); //TODO: Translate
             System.exit(1);
         }
-        return "";
+        return null;
     }
 
     /**
@@ -230,7 +230,7 @@ public class Util implements Serializable {
         String langFile = readConfig("langFile");
         try {
             //Reads the Translation
-            String worker = Util.nodeListToString(Util.executeXPath(InternalConfigDummy.langRoot+"/"+langFile,"/lang/"+id+"/text()"));
+            String worker = Util.nodeListToString(Util.executeXPath(InternalConfigDummy.LANG_ROOT +"/"+langFile,"/lang/"+id+"/text()"));
             worker = worker.replaceAll(Pattern.quote("\\r"),"\r");
             worker = worker.replaceAll(Pattern.quote("\\n"),"\n");
             return worker;
