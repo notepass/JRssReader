@@ -160,7 +160,7 @@ public class FxGui2 extends Application {
                 addStage.show();
                 bt_checkAndAddFeed.requestFocus();
                 addStage.setMinHeight(addStage.getHeight());
-                addStage.setMaxHeight(addStage.getHeight());
+                //addStage.setMaxHeight(addStage.getHeight());
                 addStage.setMinWidth(addStage.getWidth());
 
                 //If the Add-Button of the popup is clicked, check and add the Rss-Feed
@@ -279,7 +279,7 @@ public class FxGui2 extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 for (Rss scopeRss:lv_rssFeedsItems) {
-                    scopeRss.setFireChangeEvent(cb_notify.isSelected());
+                    scopeRss.setFireChangeEvent(!cb_notify.isSelected());
                 }
             }
         });
@@ -290,7 +290,7 @@ public class FxGui2 extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 for (Rss scopeRss:lv_rssFeedsItems) {
-                    scopeRss.setAutoUpdate(cb_reloadRss.isSelected());
+                    scopeRss.setAutoUpdate(!cb_reloadRss.isSelected());
                 }
             }
         });
